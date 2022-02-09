@@ -1,0 +1,61 @@
+/* Color Theme Swatches in Hex */
+
+:root {
+    --color-fondo: #65768C;
+    --color-principal: #AECCF2;
+    --color-texto: #262626;
+    --color-secundario: #C2E5F2;
+    --color-terciario: #A6A198;
+    }
+
+/*
+.Andreas-Mühe-(Website)-3-hex { color: #C2E5F2; }
+.Andreas-Mühe-(Website)-4-hex { color: #A6A198; }
+*/
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/*Texto*/
+h1 {
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+    margin: 10px 0 10px 0;
+    color: var(--color-principal);
+    font-size: xx-large;
+}
+
+h2 {
+    color: var(--color-principal);
+    font-size: x-large;
+}
+
+h3 {
+    font-size: large;
+}
+
+/*Contenedores*/
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto)
+}
+
+article {
+    background-color: var(--color-principal);
+    text-align: center;
+    width: 250px;
+    margin: 5px;
+}
+
+#section-pacientes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items:center;
+    align-content: space-between;
+    flex-wrap: wrap;
+    
+}
