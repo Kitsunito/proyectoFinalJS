@@ -8,11 +8,6 @@
     --color-terciario: #A6A198;
     }
 
-/*
-.Andreas-Mühe-(Website)-3-hex { color: #C2E5F2; }
-.Andreas-Mühe-(Website)-4-hex { color: #A6A198; }
-*/
-
 *{
     margin: 0;
     padding: 0;
@@ -34,6 +29,7 @@ h2 {
 
 h3 {
     font-size: large;
+    font-family: 'Ubuntu', sans-seif;
 }
 
 /*Contenedores*/
@@ -43,11 +39,26 @@ body {
     color: var(--color-texto)
 }
 
+div {
+    padding: 0 10px 0 10px;
+}
 article {
     background-color: var(--color-principal);
     text-align: center;
     width: 250px;
+    height: 150px;
     margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 2%;
+}
+
+#menu {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0 10px 0;
+    justify-content: space-evenly;
 }
 
 #section-pacientes {
@@ -58,4 +69,12 @@ article {
     align-content: space-between;
     flex-wrap: wrap;
     
+}
+
+/*Componentes*/
+.button-menu{
+    padding: 7px;
+    background-color: #AECCF2;
+    text-decoration: none;
+
 }
