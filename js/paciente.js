@@ -45,7 +45,7 @@ class tipoVacuna{
                 this.monodosis = false;
                 break;
             default:
-                this.id = -1;
+                this.id = 0;
                 this.nombre = "Sin vacunar";
                 this.monodosis = true;
         }
@@ -216,67 +216,70 @@ class Paciente{
 
 //Función para el agregado de pacientes
 const covid19CBA = () => {
-    //Pedimos los datos del paciente    
-    let nombre = prompt("Ingrese el nombre del paciente");
-    let dni = prompt("Ingrese el DNI del paciente");
-    var fis = new Date("12/01/2019");
-    var ftm = new Date();
-    
-    if (prompt("El paciente presenta síntomas.\nS: Sí\nOtro valor: no","S") === "S"){
-        fis = Date.parse(prompt("Ingrese la fecha de inicio de síntomas en formato MM/DD/AAAA..."));
-        while (isNaN(fis))
-            fis = Date.parse(prompt("Ingrese una fecha válida..."));
+    //Validamos que el formulario esté cargado
+    if (validarFormulario()){
+        //Buscamos los campos del formulario
+        let formNombre = document.getElementById("txtnombre");
+        let formDNI = document.getElementById("txtdni");
+        let formFTM = document.getElementById("txtFTM");
+        let formFIS = document.getElementById("txtFIS");
+        let formTipoVacuna1 = document.getElementById("cboVacuna1");
+        let formFechaVacuna1 = document.getElementById("txtFechaVacuna1");
+        let formTipoVacuna2 = document.getElementById("cboVacuna2");
+        let formFechaVacuna2 = document.getElementById("txtFechaVacuna2");
+
+        //Convertimos las fechas en Date
+        let ftm = new Date(formFTM.value);
+        
+        let fis,fechaVacuna1,fechaVacuna2;
+
+        if (formFIS.value === "" || formFIS.disabled)
+            fis = new Date("12/01/2019");
+        else
+            fis = new Date(formFIS.value);
+
+        if (formFechaVacuna1.value === "" || formFechaVacuna1.disabled)
+            fechaVacuna1 = new Date("12/01/2019");
+        else
+            fechaVacuna1 = new Date(formFechaVacuna1.value);
+
+        if (formFechaVacuna2.value === "" || formFechaVacuna2.disabled)
+            fechaVacuna2 = new Date("12/01/2019");
+        else
+            fechaVacuna2 = new Date(formFechaVacuna2.value);
+        
+        //Instanciamos una variable vacunas para cargar el esquema de vacunación
+        let vacunas = [];
+
+        //Instanciamos la primera vacuna
+        let tipoVacuna1 = new tipoVacuna(parseInt(formTipoVacuna1.value));
+        tipoVacuna1.setAtributos();
+        vacunas.push(new Vacuna(fechaVacuna1, tipoVacuna1));
+
+        //Si la primer vacuna registrada no es monodosis, guardamos el dato de la segunda vacuna
+        if (!vacunas[0].tipoVacuna.monodosis){
+            let tipoVacuna2 = new tipoVacuna(parseInt(formTipoVacuna2.value));
+            tipoVacuna2.setAtributos();
+            vacunas.push(new Vacuna(fechaVacuna2, tipoVacuna2));
+        }
+        
+        //Instanciamos el esquema de vacunación
+        let esquema = new EsquemaVacunacion(vacunas);
+
+        //Instanciamos al paciente
+        let nombre = formNombre.value;
+        let dni = formDNI.value;
+        let paciente = new Paciente(dni, nombre, esquema, fis, ftm);
+
+        //Lo sumamos a la sección de pacientes
+        
+        let seccion = document.getElementById("section-pacientes");
+
+        let articulo = document.createElement('article');
+        articulo.className = "paciente";
+        articulo.innerHTML += paciente.generarHTMLPaciente();
+
+        alert(articulo.innerHTML);/*
+        seccion.appendChild(articulo);*/
     }
-    ftm = Date.parse(prompt("Ingrese la fecha de toma de la muestra en formato MM/DD/AAAA..."));
-    while (isNaN(ftm))
-        ftm = Date.parse(prompt("Ingrese una fecha válida..."));
-    
-    let esquema = new EsquemaVacunacion;
-    esquema.cargarEsquemaVacunacion();
-
-    //Instanciamos al paciente
-    let paciente = new Paciente(dni, nombre, esquema, fis, ftm)
-
-    //Lo sumamos a la sección de pacientes
-    let seccion = document.getElementById("section-pacientes");
-
-    let articulo = document.createElement('article');
-    articulo.className = "paciente";
-    articulo.innerHTML += paciente.generarHTMLPaciente();
-
-    seccion.appendChild(articulo);
 }
-
-//Función de eliminación de pacientes de la sección.
-const eliminarPacientes = () => {
-    let pacientes = document.getElementsByClassName("paciente");
-    let seccion = document.getElementById("section-pacientes");
-    if (pacientes.length > 0)
-        seccion.innerHTML = "";
-}
-
-const menu = () => {
-    let seccionMenu = document.getElementById("menu");
-
-    //Creamos un botón para llamar a la función covid19CBA que pide los datos del paciente.
-    let agregar = document.createElement('button');
-    agregar.className = "button-menu";
-    agregar.addEventListener('click', function(){
-        covid19CBA();
-    });
-    agregar.innerHTML = "Agregar paciente";
-
-    //Creamos un botón que llama a la función eliminarPacientes para eliminar los pacientes.
-    let eliminar = document.createElement('button');
-    eliminar.className = "button-menu";
-    eliminar.addEventListener('click', function(){
-        eliminarPacientes();
-    });
-    eliminar.innerHTML = "Limpiar pacientes";
-
-    //Con appendChild agregamos los botones a la sección del menu.
-    seccionMenu.appendChild(agregar);
-    seccionMenu.appendChild(eliminar);
-}
-
-menu();
