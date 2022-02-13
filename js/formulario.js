@@ -5,6 +5,7 @@ const eliminarPacientes = () => {
     let seccion = document.getElementById("section-pacientes");
     if (pacientes.length > 0)
         seccion.innerHTML = "";
+    localStorage.removeItem("listadoPacientes");
 }
 
 //Función de habilitación del campo de FIS en función del switch
@@ -123,12 +124,13 @@ const botones = () => {
 
     //Creamos un botón que llama a la función eliminarPacientes para eliminar los pacientes.
     let eliminar = document.createElement('button');
-    eliminar.className = "button-menu";
+    eliminar.className = "btn btn-primary";
     eliminar.addEventListener('click', eliminarPacientes);
     eliminar.innerHTML = "Limpiar pacientes";
 
     //Con appendChild agregamos los botones a la sección del menu.
     seccionMenu.appendChild(agregar);
+    seccionMenu.appendChild(eliminar);
 }
 
 //Función de carga de eventos en otros componentes

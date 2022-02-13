@@ -140,7 +140,7 @@ class Paciente{
         //Caso contrario, ordenamos las vacunas por fecha, por las dudas
         this.esquemaVacunacion.ordenarVacunas();
         //Si en esquema de vacunación, la vacuna es "sin vacunar", el esquema primario está incompleto
-        if (this.esquemaVacunacion.vacunas[0].tipoVacuna.id === -1)
+        if (this.esquemaVacunacion.vacunas[0].tipoVacuna.id === 0)
             return false;
         //Si la primer vacuna corresponde a un tipo de una sola aplicación, considerar completo
         if (this.esquemaVacunacion.vacunas[0].tipoVacuna.monodosis)
@@ -214,6 +214,47 @@ class Paciente{
     }
 }
 
+const consultarPacientes = () => {
+    const almacenados = JSON.parse(localStorage.getItem("listadoPacientes"));
+    const pacientes = [];
+
+    if (!!almacenados) {//Validamos que haya datos almacenados
+        for (const x of almacenados) {
+            let paciente = new Paciente();
+            paciente.dni = x.dni;
+            paciente.nombre = x.nombre;
+            paciente.esquemaVacunacion = new EsquemaVacunacion(x.esquemaVacunacion.vacunas);
+            paciente.fis = x.fis;
+            paciente.ftm = x.ftm;
+            pacientes.push(paciente);
+        }
+    }
+    return pacientes;
+}
+
+const cargarPacientes = () => {
+    const pacientes = consultarPacientes();
+    let seccion = document.getElementById("section-pacientes");
+
+    
+    //Generamos el código para sumar el paciente a la sección
+    for (const paciente of pacientes){
+        let articulo = document.createElement('article');
+        articulo.className = "paciente";
+        articulo.innerHTML += paciente.generarHTMLPaciente();
+
+        //Incoporamos al paciente
+        seccion.appendChild(articulo);
+    }
+}
+
+const almacenarPacientes = (paciente) => {
+    const pacientes = consultarPacientes();
+    pacientes.push(paciente);
+
+    localStorage.setItem("listadoPacientes",JSON.stringify(pacientes));
+}
+
 //Función para el agregado de pacientes
 const covid19CBA = () => {
     //Validamos que el formulario esté cargado
@@ -271,15 +312,9 @@ const covid19CBA = () => {
         let dni = formDNI.value;
         let paciente = new Paciente(dni, nombre, esquema, fis, ftm);
 
-        //Lo sumamos a la sección de pacientes
-        
-        let seccion = document.getElementById("section-pacientes");
-
-        let articulo = document.createElement('article');
-        articulo.className = "paciente";
-        articulo.innerHTML += paciente.generarHTMLPaciente();
-
-        alert(articulo.innerHTML);/*
-        seccion.appendChild(articulo);*/
+        //Lo sumamos al almacenamiento
+        almacenarPacientes(paciente);
     }
 }
+
+cargarPacientes();
