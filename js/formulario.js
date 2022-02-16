@@ -124,7 +124,7 @@ const botones = () => {
 
     //Creamos un botón que llama a la función eliminarPacientes para eliminar los pacientes.
     let eliminar = document.createElement('button');
-    eliminar.className = "btn btn-primary";
+    eliminar.className = "btn btn-primary   ";
     eliminar.addEventListener('click', eliminarPacientes);
     eliminar.innerHTML = "Limpiar pacientes";
 

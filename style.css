@@ -72,6 +72,10 @@ article {
 }
 
 /*Componentes*/
+form {
+    background-color: var(--color-terciario);
+}
+
 .button-menu{
     padding: 7px;
     background-color: #AECCF2;
