@@ -136,22 +136,28 @@ const botones = () => {
 //Función de carga de eventos en otros componentes
 const cargarEventos = () => {
     //Switch
-    let formSwitch = document.getElementById("switchSintomas");
-    formSwitch.addEventListener('change', cambioSwitch);
+    /*let formSwitch = document.getElementById("switchSintomas");
+    formSwitch.addEventListener('change', cambioSwitch);*/
+    $("#switchSintomas").on("change", cambioSwitch);
 
     //TipoVacuna1
-    let formTipoVacuna1 = document.getElementById("cboVacuna1");
-    formTipoVacuna1.addEventListener('change', cambioVacuna1);
+    /*let formTipoVacuna1 = document.getElementById("cboVacuna1");
+    formTipoVacuna1.addEventListener('change', cambioVacuna1);*/
+    $("#cboVacuna1").on("change", cambioVacuna1);
 
-    let formTipoVacuna2 = document.getElementById("cboVacuna2");
-    formTipoVacuna2.addEventListener('change', cambioVacuna2);
+
+    /*let formTipoVacuna2 = document.getElementById("cboVacuna2");
+    formTipoVacuna2.addEventListener('change', cambioVacuna2);*/
+    $("#cboVacuna2").on("change", cambioVacuna2);
 }
 
-
-
-
-
-
-
 cargarEventos();
-botones();
+
+//Utilizamos Jquery.ready para que el título y los botones carguen después del resto del formulario
+$(()=>{
+    $('body').prepend(
+        `<header>
+            <h1>Simulador COVID-19</h1>
+        </header>`);
+    botones();
+});

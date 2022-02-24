@@ -58,47 +58,11 @@ class Vacuna{
         this.fecha = fecha;
         this.tipoVacuna = tipoVacuna;
     }
-
-    cargarVacuna(){
-        //Solicitamos y cargamos el tipo de vacuna
-        let idVacuna = parseInt(prompt("Ingrese el número de su vacuna:\n"+
-                                "1) Sputnik V\n2) Covishield\n3) Sinopharm\n"+
-                                "4) AstraZeneca\n5) Moderna\n6) Convidencia\n"+
-                                "7) Comirnaty (Pfizer)\nOtro valor: sin vacuna"));
-        this.tipoVacuna = new tipoVacuna(idVacuna,"",-1);
-        this.tipoVacuna.setAtributos();
-
-        //En caso de que sí esté vacunado, solicitamos la fecha
-        if (this.tipoVacuna.id !== -1){
-            let fecha = new Date(prompt("Ingrese la fecha de la vacuna en formato MM/DD/AAAA..."));
-            while (isNaN(Date.parse(fecha)))
-                fecha = new Date(prompt("Ingrese una fecha válida..."));
-            this.fecha = fecha;
-            }
-        //En caso de que no esté vacunado, seteamos el atributo en una fecha
-        else
-            this.fecha = new Date("12/01/2019");
-        return this;
-    }
 }
 
 class EsquemaVacunacion{
     constructor(vacunas){
         this.vacunas = vacunas;
-    }
-
-    //Utilizamos un método para cargar n vacunas
-    cargarEsquemaVacunacion(){
-        var vacunas = [];
-        //Con un doWhile, instanciamos un objeto Vacuna vacío, y luego llamamos al método cargarVacuna()
-        //para cargarle los datos. Salimos del bucle cuando la persona no quiere cargar más o se cargó un
-        //"sin vacuna" en primera instancia
-        do {
-            let vacuna = new Vacuna("","");
-            vacunas.push(vacuna.cargarVacuna());
-        } while (vacunas[0].tipoVacuna.id !== -1 && prompt("¿Cargar otra vacuna?\nS: Sí\nOtro valor: Salir","S") === "S")
-        this.vacunas = vacunas;
-        return this;
     }
 
     //Este método sirve para ordenar las vacunas según la fecha de aplicación de las mismas.
@@ -317,4 +281,7 @@ const covid19CBA = () => {
     }
 }
 
-cargarPacientes();
+//Usamos JQuery.ready para que los pacientes sean lo último en cargar
+$(()=>{
+    cargarPacientes();
+});
