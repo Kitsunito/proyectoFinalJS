@@ -281,7 +281,7 @@ const covid19CBA = () => {
     }
 }
 
-//Usamos JQuery.ready para que los pacientes sean lo último en cargar
+//Usamos jQuery.ready para que los pacientes sean lo último en cargar
 $(()=>{
     cargarPacientes();
 });

@@ -153,7 +153,7 @@ const cargarEventos = () => {
 
 cargarEventos();
 
-//Utilizamos Jquery.ready para que el título y los botones carguen después del resto del formulario
+//Utilizamos jQuery.ready para que el título y los botones carguen después del resto del formulario
 $(()=>{
     $('body').prepend(
         `<header>
