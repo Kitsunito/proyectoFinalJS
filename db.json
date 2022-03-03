@@ -1,5 +1,10 @@
-{"posts": [
-    { "id": 1, "title": "Post 1" },
-    { "id": 2, "title": "Post 2" },
-    { "id": 3, "title": "Post 3" }
+{"vacunas": [
+    { "id": 1, "nombre": "Sputnik V", "monodosis": false },
+    { "id": 2, "nombre": "Covishield", "monodosis": false  },
+    { "id": 3, "nombre": "Sinopharm", "monodosis": false  },
+    { "id": 4, "nombre": "AstraZeneca", "monodosis": false  },
+    { "id": 5, "nombre": "Moderna", "monodosis": false  },
+    { "id": 6, "nombre": "Convidencia", "monodosis": false  },
+    { "id": 7, "nombre": "Comirnaty", "monodosis": false  },
+    { "id": 0, "nombre": "Sin vacunar", "monodosis": true  }
     ]}  
