@@ -15,40 +15,13 @@ class tipoVacuna{
 
     //Método para asignar el nombre y el atributo monodosis de la vacuna en función del ID
     setAtributos() {
-        switch(this.id){
-            case 1:
-                this.nombre = "Sputnik V";
-                this.monodosis = false;
-                break;
-            case 2:
-                this.nombre = "Covishield";
-                this.monodosis = false;
-                break;
-            case 3:
-                this.nombre = "Sinopharm";
-                this.monodosis = false;
-                break;
-            case 4:
-                this.nombre = "AstraZeneca";
-                this.monodosis = false;
-                break;
-            case 5:
-                this.nombre = "Moderna";
-                this.monodosis = false;
-                break;
-            case 6:
-                this.nombre = "Convidencia";
-                this.monodosis = true;
-                break;
-            case 7:
-                this.nombre = "Comirnaty";
-                this.monodosis = false;
-                break;
-            default:
-                this.id = 0;
-                this.nombre = "Sin vacunar";
-                this.monodosis = true;
-        }
+        let tiposVacunas = []
+        tiposVacunas = JSON.parse(localStorage.getItem("tiposVacunas"));
+
+        let tipo = tiposVacunas.filter(x => x.id === this.id)[0];
+        this.nombre = tipo.nombre;
+        this.monodosis = tipo.monodosis;
+
         return this;
     }
 }
@@ -215,8 +188,29 @@ const cargarPacientes = () => {
 const almacenarPacientes = (paciente) => {
     const pacientes = consultarPacientes();
     pacientes.push(paciente);
-
     localStorage.setItem("listadoPacientes",JSON.stringify(pacientes));
+
+    $.ajax({
+        type: "POST",
+        url: "https://my-json-server.typicode.com/kitsunito/proyectofinaljs/pacientes/",
+        data: paciente,
+        dataType: "dataType",
+        success: function (response) {
+            console.log(response);
+        }
+    });
+    
+}
+
+//Función para la carga de vacunas en el localStorage
+const cargarTiposVacunas = () => {
+    $.ajax({
+        type: "GET",
+        url: "https://my-json-server.typicode.com/kitsunito/proyectofinaljs/vacunas/",
+        success: function (response) {
+            localStorage.setItem("tiposVacunas",JSON.stringify(response))
+        }
+    });
 }
 
 //Función para el agregado de pacientes
@@ -278,10 +272,16 @@ const covid19CBA = () => {
 
         //Lo sumamos al almacenamiento
         almacenarPacientes(paciente);
+        
+        //Restablecemos el formulario y cargamos los pacientes
+        blanquearCampos();
+        cargarPacientes();
     }
 }
 
 //Usamos jQuery.ready para que los pacientes sean lo último en cargar
 $(()=>{
     cargarPacientes();
+    cargarTiposVacunas();
 });
+

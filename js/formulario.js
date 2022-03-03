@@ -19,6 +19,9 @@ const cambioSwitch = () => {
         formLabel.innerHTML = "Sí";
     else
         formLabel.innerHTML = "No";
+
+    //Agregamos una animación para mostrar u ocultar el campo
+    $("#div-fis").slideToggle(200);
 }
 
 //Función que gestiona la habilitación del campo de txtFechaVacuna1 y del select tipoVacuna2 en función de tipoVacuna1
@@ -34,10 +37,12 @@ const cambioVacuna1 = () => {
         formTipoVacuna2.value = '0';
         formFechaVacuna2.disabled = true;
         formFechaVacuna2.required = false;
+        $("#div-vacuna2").slideUp(200);
     } else {
         formFechaVacuna1.disabled = false;
         formFechaVacuna1.required = true;
         formTipoVacuna2.disabled = false;
+        $("#div-vacuna2").slideDown(200);
     }
 }
 
@@ -62,12 +67,15 @@ const validarFormulario = () => {
     
 
     //Validamos que haya texto en el campo nombre
-    if (formNombre.value === "")
+    if (formNombre.value === "") {
+        formNombre.focus();
         return false;
+    }
+        
 
     //Validamos que el DNI esté entre 10.000 y 100.000.000
-    if (isNaN(formDNI.value) || parseInt(formDNI.value) < 10000 || parseInt(formDNI.value) > 100000000){
-        formDNI.focus;
+    if (isNaN(parseInt(formDNI.value)) || parseInt(formDNI.value) < 10000 || parseInt(formDNI.value) > 100000000){
+        formDNI.focus();
         formDNI.placeholder = "Ingrese un DNI válido";
         formDNI.value = "";
         return false;
@@ -76,7 +84,7 @@ const validarFormulario = () => {
     //Validamos que la FTM sea una fecha
     let fecha = Date.parse(formFTM.value);
     if (isNaN(fecha)){
-        formFTM.focus;
+        formFTM.focus();
         formFTM.placeholder = "Ingrese una fecha válida en formato MM/DD/AAAA";
         formFTM.value = "";
         return false;
@@ -85,7 +93,7 @@ const validarFormulario = () => {
     //Validamos que la FIS sea una fecha
     fecha = Date.parse(formFIS.value);
     if (formFIS.required && isNaN(fecha)){
-        formFIS.focus;
+        formFIS.focus();
         formFIS.placeholder = "Ingrese una fecha válida en formato MM/DD/AAAA";
         formFIS.value = "";
         return false;
@@ -94,7 +102,7 @@ const validarFormulario = () => {
     //Validamos que la Fecha de la Vacuna 1 sea una fecha
     fecha = Date.parse(formFechaVacuna1.value);
     if (formFechaVacuna1.required && isNaN(fecha)){
-        formFechaVacuna1.focus;
+        formFechaVacuna1.focus();
         formFechaVacuna1.placeholder = "Ingrese una fecha válida";
         formFechaVacuna1.value = "";
         return false;
@@ -103,7 +111,7 @@ const validarFormulario = () => {
     //Validamos que la Fecha de la Vacuna 2 sea una fecha
     fecha = Date.parse(formFechaVacuna2.value);
     if (formFechaVacuna2.required && isNaN(fecha)){
-        formFechaVacuna2.focus;
+        formFechaVacuna2.focus();
         formFechaVacuna2.placeholder = "Ingrese una fecha válida    ";
         formFechaVacuna2.value = "";
         return false;
@@ -136,28 +144,40 @@ const botones = () => {
 //Función de carga de eventos en otros componentes
 const cargarEventos = () => {
     //Switch
-    /*let formSwitch = document.getElementById("switchSintomas");
-    formSwitch.addEventListener('change', cambioSwitch);*/
     $("#switchSintomas").on("change", cambioSwitch);
 
     //TipoVacuna1
-    /*let formTipoVacuna1 = document.getElementById("cboVacuna1");
-    formTipoVacuna1.addEventListener('change', cambioVacuna1);*/
     $("#cboVacuna1").on("change", cambioVacuna1);
 
-
-    /*let formTipoVacuna2 = document.getElementById("cboVacuna2");
-    formTipoVacuna2.addEventListener('change', cambioVacuna2);*/
+    //TipoVacuna2
     $("#cboVacuna2").on("change", cambioVacuna2);
 }
 
-cargarEventos();
+//Función para blanquear los campos del formulario
+//se utiliza para poner los botones por fuera del formulario
+const blanquearCampos = () => {
+    $(".form-control").val("");
+    $("#switchSintomas").prop('checked', true);
+    $(".form-select").val(0);
 
-//Utilizamos jQuery.ready para que el título y los botones carguen después del resto del formulario
+    //También eliminamos los pacientes que se mostraban, para no duplicarlos
+    let pacientes = document.getElementsByClassName("paciente");
+    let seccion = document.getElementById("section-pacientes");
+    if (pacientes.length > 0)
+        seccion.innerHTML = "";
+
+    $("#div-fis").slideDown(200);
+    $("#div-vacuna2").slideUp(200);
+}
+
+//Utilizamos jQuery.ready para que el título, los botones y los eventos
+//carguen después del resto del formulario
 $(()=>{
     $('body').prepend(
         `<header>
             <h1>Simulador COVID-19</h1>
         </header>`);
+    $("#div-vacuna2").hide();
     botones();
+    cargarEventos();
 });

@@ -34,7 +34,7 @@
                         <label class="form-check-label" for="switchSintomas" id="label-sintomas">Sí</label>
                     </div>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" id="div-fis">
                     <label for="txtFIS">Fecha de Inicio de Síntomas</label>
                     <input type="text" class="form-control" id="txtFIS" placeholder="MM/DD/AAAA" required>
                 </div>
@@ -57,7 +57,7 @@
                         <input type="text" class="form-control" id="txtFechaVacuna1" placeholder="MM/DD/AAAA" disabled>
                     </div>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="div-vacuna2">
                     <div class="mb-3">
                         <label for="cboVacuna2" class="form-label">Vacuna 2da dosis</label>
                         <select class="form-select" id="cboVacuna2" disabled>
@@ -76,10 +76,9 @@
                         <input type="text" class="form-control" id="txtFechaVacuna2" placeholder="MM/DD/AAAA" disabled>
                     </div>
                 </div>
-                <div class="input-group mb-3" id="menu">
-                </div>
             </form>
-
+            <div class="input-group mb-3" id="menu">
+            </div>
         </section>
         <div>
             <h2>Pacientes</h2>
@@ -88,9 +87,6 @@
             </section>
         </div>
     </main>
-    <footer>
-        
-    </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/formulario.js"></script>
     <script src="/js/paciente.js"></script>
