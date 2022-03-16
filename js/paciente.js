@@ -6,6 +6,9 @@ que haya resultado positiva para COVID, en función de los siguientes parámetro
 En función de lo que el usuario decida, se deben pedir los datos del paciente 
 y se debe indicar la fecha probable de alta.*/
 
+//Creamos una variable global para poder utilizar la libería Luxon
+var DateTime = luxon.DateTime;
+
 class tipoVacuna{
     constructor(id){
         this.id = id;
@@ -66,8 +69,8 @@ class Paciente{
         this.dni = dni;
         this.nombre = nombre;
         this.esquemaVacunacion = esquemaVacunacion;
-        this.fis = fis;
-        this.ftm = ftm;
+        this.fis = fis; //fecha de inicio de síntomas
+        this.ftm = ftm; //fecha de toma de muestra
     }
 
     validarEsquemaPrimario() {
@@ -91,16 +94,16 @@ class Paciente{
     
     calcularFechaDeCurva(){
         //validamos que tenga FIS
-        var diaCero = new Date("12/01/2019");
-        var inicio = new Date(this.fis);
-        if (inicio.getTime() === diaCero.getTime())
-            return new Date(this.ftm);
+        var diaCero = DateTime.local(2019,12,01);
+        var inicio = this.fis;
+        if (inicio.toLocaleString() === diaCero.toLocaleString())
+            return this.ftm;
         else {
             //Si no, devolvemos la menor de las fechas entre la FTM y la FIS
             if (this.fis >= this.ftm)
-                return new Date(this.ftm);
+                return this.ftm;
             else
-                return new Date(this.fis);
+                return this.fis;
         }
     }
 
