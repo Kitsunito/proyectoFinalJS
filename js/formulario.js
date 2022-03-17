@@ -60,9 +60,7 @@ const validarFormulario = () => {
     let formDNI = document.getElementById("txtdni");
     let formFTM = document.getElementById("txtFTM");
     let formFIS = document.getElementById("txtFIS");
-    let formTipoVacuna1 = document.getElementById("cboVacuna1");
     let formFechaVacuna1 = document.getElementById("txtFechaVacuna1");
-    let formTipoVacuna2 = document.getElementById("cboVacuna2");
     let formFechaVacuna2 = document.getElementById("txtFechaVacuna2");
     
 
@@ -127,13 +125,19 @@ const botones = () => {
     //Creamos un botón para llamar a la función covid19CBA que pide los datos del paciente.
     let agregar = document.createElement('button');
     agregar.className = "btn btn-primary";
-    agregar.addEventListener('click', covid19CBA);
+    agregar.addEventListener('click', function(e) {
+        e.preventDefault();
+        covid19CBA();
+    });
     agregar.innerHTML = "Agregar paciente";
 
     //Creamos un botón que llama a la función eliminarPacientes para eliminar los pacientes.
     let eliminar = document.createElement('button');
     eliminar.className = "btn btn-primary   ";
-    eliminar.addEventListener('click', eliminarPacientes);
+    eliminar.addEventListener('click', function(e) {
+        e.preventDefault();
+        eliminarPacientes();
+    });
     eliminar.innerHTML = "Limpiar pacientes";
 
     //Con appendChild agregamos los botones a la sección del menu.
