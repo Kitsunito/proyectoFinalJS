@@ -1,5 +1,4 @@
 /*Abstracción de clases utilizada en la solución*/
-
 class TipoVacuna{
     constructor(id){
         this.id = id;
@@ -85,6 +84,7 @@ class Paciente{
     
     calcularFechaDeCurva(){
         //validamos que tenga FIS
+        //var diaCero2 = DateTime(2019, 12, 1);
         var diaCero = new Date("12/01/2019");
         var inicio = new Date(this.fis);
         if (inicio.getTime() === diaCero.getTime())

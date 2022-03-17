@@ -136,8 +136,5 @@ const covid19CBA = () => {
 }
 
 //Usamos jQuery.ready para que los pacientes sean lo último en cargar
-$(()=>{
-    cargarPacientes();
-    cargarTiposVacunas();
-});
-
+cargarPacientes();
+cargarTiposVacunas();
