@@ -1,11 +1,11 @@
 /* Color Theme Swatches in Hex */
 
 :root {
-    --color-fondo: #65768C;
-    --color-principal: #AECCF2;
-    --color-texto: #262626;
-    --color-secundario: #C2E5F2;
-    --color-terciario: #A6A198;
+    --color-fondo: #F0F0F2;
+    --color-principal: #0fa2c4;
+    --color-texto: #F0F0F2;
+    --color-secundario: #0fa2c4;
+    --color-terciario: #0367A6;
     }
 
 *{
@@ -42,6 +42,7 @@ body {
 div {
     padding: 0 10px 0 10px;
 }
+
 article {
     background-color: var(--color-principal);
     text-align: center;
@@ -52,6 +53,11 @@ article {
     flex-direction: column;
     justify-content: space-evenly;
     border-radius: 2%;
+}
+
+section#cargaPacientes {
+    display: flex;
+    justify-content: center;
 }
 
 #menu {
@@ -74,6 +80,15 @@ article {
 /*Componentes*/
 form {
     background-color: var(--color-terciario);
+}
+
+form.mb-3.pb-3 {
+    border-radius: 5px;
+    max-width: 600px;
+}
+
+article.paciente {
+    border-radius: 5px;
 }
 
 .button-menu{
